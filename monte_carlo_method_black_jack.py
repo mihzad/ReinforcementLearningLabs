@@ -3,14 +3,19 @@ import pandas as pd
 from collections import defaultdict
 import random
 
+epsilon = 0.5
 
 def epsilon_greedy_policy(state, Q):
     # set the epsilon value to 0.5
-    epsilon = 0.5
 
     # sample a random value from the uniform distribution, if the sampled value is less than
     # epsilon then we select a random action else we select the best action which has maximum Q
     # value as shown below
+
+    # There are two actions: stick (0), and hit (1).
+    # Stop draging cards if the player's sum is 20 or more.
+    if state[0] >= 20:
+        return 0
 
     if random.uniform(0, 1) < epsilon:
         return env.action_space.sample()
@@ -53,7 +58,7 @@ def generate_policy(Q):
 
 def test_policy(policy, env):
 
-    num_episodes = 100
+    num_episodes = 10000
     num_timesteps = 10000
     total_reward = 0
 
@@ -62,6 +67,7 @@ def test_policy(policy, env):
         episode_reward = 0
 
         for t in range(num_timesteps):
+            # action = env.action_space.sample()
             action = policy[state]
             next_state, reward, done, info = env.step(action)
             episode_reward += reward
@@ -77,15 +83,19 @@ def test_policy(policy, env):
 
 
 if __name__ == '__main__':
+
     env = gym.make('Blackjack-v1')
+
+    # print(test_policy({}, env))
 
     Q = defaultdict(float)
     total_return = defaultdict(float)
 
     N = defaultdict(int)
 
-    num_iterations = 50000
+    num_iterations = 200000
     for i in range(num_iterations):
+        epsilon = 1 - i / num_iterations
         episode = generate_episode(100, Q)
 
         # get all the state-action pairs in the episode
@@ -112,6 +122,6 @@ if __name__ == '__main__':
                 Q[(state, action)] = total_return[(state, action)] / N[(state, action)]
 
     policy = generate_policy(Q)
-    print(policy)
+    # print(policy)
 
     print(test_policy(policy, env))
