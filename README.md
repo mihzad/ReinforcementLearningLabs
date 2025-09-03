@@ -1,3 +1,6 @@
+https://colab.research.google.com/
+https://lightning.ai/studios/
+
 # ReinforcementLearning_2024
 
 ## Пара 1 
