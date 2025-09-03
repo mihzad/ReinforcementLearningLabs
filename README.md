@@ -5,8 +5,8 @@ https://lightning.ai/studios/
 
 ## Пара 1 
 ### ДЗ 
-1. Відворити тренування з практики 
-2. Запустити тренування для https://www.gymlibrary.dev/environments/classic_control/cart_pole/
+1. Відворити тренування з практики  
+   gymnasium/main.py
 
 * gymnasium
 
