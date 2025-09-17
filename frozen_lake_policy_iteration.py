@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import numpy as np
 
 import time
@@ -39,7 +39,7 @@ def compute_value_function(policy, env, num_iterations=1000, threshold=1e-20, ga
 
             # compute the value of the state using the selected action
             value_table[s] = sum([prob * (r + gamma * updated_value_table[s_])
-                                  for prob, s_, r, _ in env.P[s][a]])
+                                  for prob, s_, r, _ in env.unwrapped.P[s][a]])
 
         # after computing the value table, that is, value of all the states, we check whether the
         # difference between value table obtained in the current iteration and previous iteration is
@@ -70,7 +70,7 @@ def extract_policy(value_table, env, gamma=1.0):
     for s in range(env.observation_space.n):
         # compute the Q value of all the actions in the state
         Q_values = [sum([prob * (r + gamma * value_table[s_])
-                         for prob, s_, r, _ in env.P[s][a]])
+                         for prob, s_, r, _ in env.unwrapped.P[s][a]])
                     for a in range(env.action_space.n)]
 
         # extract policy by selecting the action which has maximum Q value
@@ -105,14 +105,14 @@ def policy_iteration(env):
 
 def test(env, optimal_policy, render=True):
 
-    state = env.reset()
+    state, prob = env.reset()
     if render:
         env.render()
 
     total_reward = 0
     for _ in range(1000):
         action = int(optimal_policy[state])
-        state, reward, done, info = env.step(action)
+        state, reward, done, info, prob = env.step(action)
 
         if render:
             env.render()
@@ -127,7 +127,6 @@ if __name__ == '__main__':
     # show_random_agent()
 
     env = gym.make('FrozenLake-v1', desc=None, map_name="4x4", is_slippery=True)
-    env.seed(0)
 
     optimal_policy = policy_iteration(env)
     print(optimal_policy)

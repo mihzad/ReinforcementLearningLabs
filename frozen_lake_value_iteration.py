@@ -1,5 +1,6 @@
-import gym
+import gymnasium as gym
 import numpy as np
+from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 
 import time
 
@@ -38,7 +39,7 @@ def value_iteration(env, num_iterations=1000, threshold=1e-20, gamma=0.99):
         # we update the value of the state as the one which has maximum Q value as shown below:
         for s in range(env.observation_space.n):
             Q_values = [sum([prob * (r + gamma * updated_value_table[s_])
-                             for prob, s_, r, _ in env.P[s][a]])
+                             for prob, s_, r, _ in env.unwrapped.P[s][a]])
                         for a in range(env.action_space.n)]
 
             value_table[s] = max(Q_values)
@@ -79,7 +80,7 @@ def extract_policy(env, value_table):
     for s in range(env.observation_space.n):
         # compute the Q value of all the actions in the state
         Q_values = [sum([prob * (r + gamma * value_table[s_])
-                         for prob, s_, r, _ in env.P[s][a]])
+                         for prob, s_, r, _ in env.unwrapped.P[s][a]])
                     for a in range(env.action_space.n)]
 
         # extract policy by selecting the action which has maximum Q value
@@ -90,30 +91,33 @@ def extract_policy(env, value_table):
 
 def test(env, optimal_policy, render=True):
 
-    state = env.reset()
+    state = env.reset()[0]
     if render:
         env.render()
 
 
     total_reward = 0
+    counter = 0
     for _ in range(1000):
         action = int(optimal_policy[state])
-        state, reward, done, info = env.step(action)
+        state, reward, done, info, prob = env.step(action)
 
         if render:
             env.render()
 
         total_reward += reward
+        counter += 1
         if done:
             break
 
-    return total_reward
+    return total_reward, counter
 
 
 if __name__ == '__main__':
-
-    env = gym.make('FrozenLake-v1', desc=None, map_name="4x4", is_slippery=True)
-    env.seed(42)
+    desc=None
+    # desc=generate_random_map(size=8)
+    env = gym.make('FrozenLake-v1', desc=desc, is_slippery=True)
+    # env.seed(42)
 
     # show_random_agent(env)
     # env.P[1][1][2] = (1 / 3, 2, 1.0, False)
@@ -138,10 +142,15 @@ if __name__ == '__main__':
     print(total_reward)
 
     sum_reward = 0
+    counter_sum = 0
     for _ in range(5000):
-        total_reward = test(env, optimal_policy, render=False)
+        total_reward, counter = test(env, optimal_policy, render=False)
         sum_reward += total_reward
+        if sum_reward > 0:
+            counter_sum += counter
+
 
     print(sum_reward / 5000)
+    print(counter_sum / sum_reward)
 
     env.close()
