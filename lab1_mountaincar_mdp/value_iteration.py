@@ -11,6 +11,9 @@ class ValueIteration(MountainCarIteration):
         super().__init__(gym_env, position_bins_count, velocity_bins_count)
         self.gamma = gamma
 
+    def reward(self, old_pos, new_pos):
+        return -1 + np.abs(new_pos - old_pos) ** 2
+
     def perform(self, iter_count=1000, eps=1e-3):
         value_table = np.zeros((self.pbc, self.vbc))
         policy = np.zeros((self.pbc, self.vbc))
@@ -27,7 +30,7 @@ class ValueIteration(MountainCarIteration):
                         next_pos, next_vel = self.predict_next_state(curr_state=(pos, vel), action=a)
                         next_pos_bin, next_vel_bin = self.discretize_state(state=(next_pos, next_vel))
 
-                        reward = -1 + np.abs(next_pos - pos)
+                        reward = self.reward(old_pos=pos, new_pos=next_pos)
                         q_value = reward + self.gamma * previous_value_table[next_pos_bin, next_vel_bin]
                         q_values.append(q_value)
 
