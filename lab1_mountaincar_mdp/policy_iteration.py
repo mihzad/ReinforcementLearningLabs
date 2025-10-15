@@ -6,12 +6,13 @@ from basic_ops import MountainCarIteration
 
 
 class PolicyIteration(MountainCarIteration):
-    def __init__(self, gym_env, position_bins_count, velocity_bins_count, gamma):
+    def __init__(self, gym_env, position_bins_count, velocity_bins_count, gamma, reward_power=1):
         super().__init__(gym_env, position_bins_count, velocity_bins_count)
         self.gamma = gamma
+        self.reward_power = reward_power
 
     def reward(self, old_pos, new_pos):
-        return -1 + np.abs(new_pos - old_pos) ** 2
+        return -1 + np.abs(new_pos - old_pos) ** self.reward_power
 
 
     def evaluate_value_function(self, policy, max_iter_count=1000, eps=10e-6):

@@ -7,12 +7,13 @@ from basic_ops import MountainCarIteration
 
 class ValueIteration(MountainCarIteration):
 
-    def __init__(self, gym_env, position_bins_count, velocity_bins_count, gamma):
+    def __init__(self, gym_env, position_bins_count, velocity_bins_count, gamma, reward_power=1):
         super().__init__(gym_env, position_bins_count, velocity_bins_count)
         self.gamma = gamma
+        self.reward_power = reward_power
 
     def reward(self, old_pos, new_pos):
-        return -1 + np.abs(new_pos - old_pos) ** 2
+        return -1 + np.abs(new_pos - old_pos) ** self.reward_power
 
     def perform(self, iter_count=1000, eps=1e-3):
         value_table = np.zeros((self.pbc, self.vbc))
