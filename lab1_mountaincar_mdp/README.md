@@ -1,4 +1,4 @@
-# Lab 1: Mountain Car V0 - Policy and Value iterations
+# Lab 1: Mountain Car - Policy and Value iterations
 
 ### Policy iteration
 
