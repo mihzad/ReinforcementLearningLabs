@@ -123,3 +123,5 @@ Episode 50000: avg reward -202.20
 Training finished. Time spent: 4325.01970911026 seconds.
 Actual Environment test reward: -130.0
 ```
+We can see pretty good results, which are kind of similar compared to Policy and Value iterations. And we dont need any model details.
+Yet it took very long time for them to be made - 4305s. For example, Policy Iteration took an order of magnitude less time, let alone the Value Iteration, which got done in less than a minute.
