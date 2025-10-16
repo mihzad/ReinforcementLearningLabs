@@ -70,3 +70,7 @@ Reward used: `-1 + (next_position-current_position) ** n`, encourages movement.
 | 50                          | 1                             | -111.0                         |
 | 50                          | 2                             | -110.0                         |
 | 50                          | 3                             | -88.0                          |
+
+#### Approximate Speed Comparison
+One full Policy Iteration algorithm takes about 5 minutes to complete, and Value Iteration one converges in less than a minute, which is a huge boost.
+Yet we can`t be sure Value Iteration will be that stable with more difficult tasks.
