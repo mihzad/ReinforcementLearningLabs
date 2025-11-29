@@ -1,0 +1,24 @@
+D:\miniconda\envs\ReinforcementLearning\python.exe D:\PyCharm_Community_Edition_2023.2.2\_Solutions\ReinforcementLearning\lab3_dql_lunarlander\main.py 
+<frozen importlib._bootstrap>:241: RuntimeWarning: Your system is avx2 capable but pygame was not built with support for it. The performance of some of your blits could be adversely affected. Consider enabling compile time detection with environment variables like PYGAME_DETECT_AVX2=1 if you are compiling without cross compilation.
+D:\miniconda\envs\ReinforcementLearning\Lib\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+Training started...
+Episode 100	Average Score: -153.55
+Episode 200	Average Score: -104.36
+Episode 300	Average Score: -7.46
+Episode 400	Average Score: 42.80
+Episode 500	Average Score: 128.54
+Episode 600	Average Score: 161.70
+Episode 700	Average Score: 193.57
+Episode 778	Average Score: 200.28
+Environment solved in 678 episodes.	Avg Score: 200.28
+Visualizing result...
+
+Starting Test (Exploitation Mode)...
+Test Episode 1: Score 244.6199647801206
+Test Episode 2: Score 258.12778946921713
+Test Episode 3: Score 257.04931258555234
+Test Episode 4: Score 255.34475856197767
+Test Episode 5: Score 243.92417079189426
+
+Process finished with exit code 0
