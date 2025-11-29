@@ -5,4 +5,5 @@ RL training params can be seen in agent.py.
 The output image:
 <img width="1280" height="638" alt="image" src="https://github.com/user-attachments/assets/80143278-0e04-44fc-aef1-9c6dd261dcee" />
 
+From the output, it can be clearly seen that agent had achieved score 200+ (successful landing) in 778 episodes.
 The output text can be found in output_log.txt.
